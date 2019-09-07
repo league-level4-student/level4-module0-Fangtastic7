@@ -39,9 +39,9 @@ public class GridPanel extends JPanel{
 		
 		//3. Iterate through the array and initialize each element to a new pixel.
 		//Random random = new Random();
-		for(int i=0; i < array2d.length; i++) {
-			for(int j=0; j <array2d.length; j++) {
-				array2d[i][j] = new Pixel(i * pixelWidth, j * pixelHeight);
+		for(int i=0; i < rows; i++) {
+			for(int j=0; j < cols; j++) {
+				array2d[i][j] = new Pixel(i, j);
 			}
 		}
 		
@@ -54,23 +54,44 @@ public class GridPanel extends JPanel{
 	public void clickPixel(int mouseX, int mouseY) {
 		//5. Use the mouseX and mouseY variables to change the color
 		//   of the pixel that was clicked. *HINT* Use the pixel's dimensions.
+		Pixel x = array2d[mouseY / pixelHeight][mouseX /pixelWidth];
+		x.color = color;
+	//	System.out.println(mouseX);
+	//	System.out.println(mouseY);
+		//System.out.println(array2d[1][3].x);
+		//for(int i=0; i < array2d.length; i++) {
+		//	for(int j=0; j <array2d.length; j++) {
+				//System.out.println(array2d[i][j].x);
+			//	System.out.println(i);
+				//System.out.println(j);
+		//if(mouseX == pixelWidth*i + j ) {
+		//	for( int x = pixelWidth *i; x < pixelWidth * (i - 1); x++) {
+		//		for( int y= pixelHeight * j; y <pixelHeight * (j-1) ; y++) {
+		//	if(mouseX <pixelWidth * i && mouseX > pixelWidth * (i+1) && mouseY <pixelHeight * j && mouseY > pixelHeight * (j+1)) {
+		//	System.out.println("Color changed");
+		// array2d[i][j].color = color;
+		 System.out.println(array2d.length);
+		 System.out.println(rows);
+	//	}
+			//	}}
+		}
+			//}
+		//}
 		
-		//color = array2d[x][y].color; 
-		
-	}
+//	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		//4. Iterate through the array.
 		//   For every pixel in the list, fill in a rectangle using the pixel's color.
 		//   Then, use drawRect to add a grid pattern to your display.
-		for(int i=0; i < array2d.length; i++) {
-			for(int j=0; j <array2d.length; j++) {
+		for(int i=0; i < rows; i++) {
+			for(int j=0; j < cols; j++) {
 				
 				g.setColor(array2d[i][j].color);
-				g.fillRect(array2d[i][j].x, array2d[i][j].y ,pixelWidth, pixelHeight);
-				g.setColor(color);
-				g.drawRect(array2d[i][j].x, array2d[i][j].y, pixelWidth, pixelHeight);
+				g.fillRect(j * pixelWidth, i * pixelHeight, pixelWidth, pixelHeight);
+				g.setColor(Color.black);
+				g.drawRect(j * pixelWidth, i * pixelHeight, pixelWidth, pixelHeight);
 				
 			}
 		}
