@@ -31,13 +31,13 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//2. Calculate the cell size.
 		cellSize = w / cpr;
 		//3. Initialize the cell array to the appropriate size.
-		array = new Cell[w][h];
+		array = new Cell[cpr][cpr];
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
 		//   passing in the location.
 		for(int i = 0 ; i < array.length; i++) {
 			for(int y =0;  y <array.length; y++) {
-				array[i][y] = new Cell(w, h, cellSize);
+				array[i][y] = new Cell(i * cellSize, y * cellSize, cellSize);
 			}
 		}
 	}
@@ -48,12 +48,12 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		Random rand = new Random();
 		for(int i = 0 ; i < array.length; i++) {
 			for(int y =0;  y <array.length; y++) {
-			int x =	rand.nextInt(1);
-			if(x == 1) {
+			//int x =	rand.nextInt(1);
+			if(rand.nextInt(2) == 0) {
 				array[i][y].isAlive = true;	
 			}
 			else {
-				array[i][y].isAlive = true;
+				array[i][y].isAlive = false;
 			}
 			}
 		}
@@ -127,15 +127,16 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		
-		if(x>0 && y>0 && x < cellsPerRow && y < cellsPerRow) {
+		if(x>0 && y>0 && x <  cellsPerRow && y < cellsPerRow) {
 			return 8;
 		}
-		else if(x==0 || y>0 && y < cellsPerRow || x==cellsPerRow && y > 0 && y < cellsPerRow || y==0 && x>0 && x < cellsPerRow || y==cellsPerRow && x > 0 && x < cellsPerRow) {
-			return 5;
-		}
-		else if(x==0 && y==0 || x==cellsPerRow && y==cellsPerRow || x==0 && y==cellsPerRow || y==0 && x ==cellsPerRow) {
+		else if(x==0 && y==0 || x== cellsPerRow && y== cellsPerRow || x==0 && y== cellsPerRow || y==0 && x == cellsPerRow) {
 			return 3;
 		}
+		else if(x==0 || y==0 && y <  cellsPerRow || x==cellsPerRow && y > 0 && y < cellsPerRow || y==0 && x>0 && x <  cellsPerRow || y== cellsPerRow && x > 0 && x <  cellsPerRow) {
+			return 5;
+		}
+		
 		return -1;
 		
 	}
@@ -166,12 +167,15 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		System.out.println(e.getY());
 		for(int i =0; i < array.length; i++) {
 			for(int y= 0; y < array.length; y++) {
-				if(array[i][y].getX()==e.getX() && array[i][y].getY()==e.getY()) {
+				if(e.getX() < i * cellSize + 50 && e.getX() > i * cellSize) {
+					if(e.getY() < y * cellSize + 50 && e.getY() > y * cellSize) {
+					System.out.println("Clicked");
 					if(array[i][y].isAlive==true) {
 						array[i][y].isAlive=false;
 					}
 					else {
 						array[i][y].isAlive=true;
+					}
 					}
 				}
 			}
