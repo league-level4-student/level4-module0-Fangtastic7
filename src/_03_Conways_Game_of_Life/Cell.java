@@ -61,7 +61,7 @@ public class Cell implements Drawable{
 			
 		}
 		else {
-			g.setColor(Color.white);
+			g.setColor(Color.gray);
 			g.drawRect(x, y, cellSize, cellSize);
 		}
 	

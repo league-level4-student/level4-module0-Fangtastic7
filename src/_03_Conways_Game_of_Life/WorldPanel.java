@@ -30,6 +30,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	
 		//2. Calculate the cell size.
 		cellSize = w / cpr;
+		System.out.println("size: " + cellSize);
 		//3. Initialize the cell array to the appropriate size.
 		array = new Cell[cpr][cpr];
 		//3. Iterate through the array and initialize each cell.
@@ -104,17 +105,18 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		for(int i = 0 ; i < array.length; i++) {
 			for(int y =0;  y <array.length; y++) {
-				
 				livingNeighbors[i][y] = getLivingNeighbors(i, y);
-				
+				array[i][y].liveOrDie(livingNeighbors[i][y]);
 			}
 			}
 		//8. check if each cell should live or die
-		for(int i = 0 ; i < array.length; i++) {
-			for(int y =0;  y <array.length; y++) {
-				System.out.println("Cell: " + i + " " + y + " - " + array[i][y].isAlive);
-			}
-			}
+		
+		
+		//for(int i = 0 ; i < array.length; i++) {
+		//	for(int y =0;  y <array.length; y++) {
+			//	System.out.println("Cell: " + i + " " + y + " - " + array[i][y].isAlive);
+			//}
+			//}
 		
 		
 		
@@ -126,17 +128,19 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
+		System.out.println(x + "," + y);
 		
-		if(x>0 && y>0 && x <  cellsPerRow && y < cellsPerRow) {
+		if(x ==cellSize && y==cellSize && x ==  cellsPerRow * cellSize -cellSize && y == cellsPerRow * cellSize -cellSize) {
+			System.out.println("8 neighbors");
 			return 8;
 		}
-		else if(x==0 && y==0 || x== cellsPerRow && y== cellsPerRow || x==0 && y== cellsPerRow || y==0 && x == cellsPerRow) {
-			return 3;
-		}
-		else if(x==0 || y==0 && y <  cellsPerRow || x==cellsPerRow && y > 0 && y < cellsPerRow || y==0 && x>0 && x <  cellsPerRow || y== cellsPerRow && x > 0 && x <  cellsPerRow) {
-			return 5;
-		}
-		
+	//	else if(x < cellSize && y < cellSize || x < cellSize && y< cellsPerRow * cellSize && y> cellsPerRow * cellSize - cellSize || y> cellsPerRow * cellSize - cellSize && x > cellsPerRow * cellSize - cellSize || x> cellsPerRow * cellSize - cellSize && y< cellSize) {
+	//		return 3;
+	//	}
+		//else if(x<=cellSize && y >= cellSize && y <= cellsPerRow * cellSize - cellSize|| y<=cellSize && x >= cellSize && x <= cellsPerRow * cellSize - cellSize || x>=cellsPerRow * cellSize-cellSize && y >= cellSize && y <= cellsPerRow * cellSize -cellSize || y>= cellsPerRow * cellSize -cellSize && x>= cellSize && x <=  cellsPerRow * cellSize -cellSize ) {
+		////	return 5;
+		//}
+		System.out.println("Not in corners");
 		return -1;
 		
 	}
@@ -163,13 +167,13 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//10. Use e.getX() and e.getY() to determine
 		//    which cell is clicked. Then toggle
 		//    the isAlive variable for that cell.
-		System.out.println(e.getX());
-		System.out.println(e.getY());
+		//System.out.println("x - " + e.getX());
+		//System.out.println("y - " + e.getY());
 		for(int i =0; i < array.length; i++) {
 			for(int y= 0; y < array.length; y++) {
-				if(e.getX() < i * cellSize + 50 && e.getX() > i * cellSize) {
-					if(e.getY() < y * cellSize + 50 && e.getY() > y * cellSize) {
-					System.out.println("Clicked");
+				if(e.getX() < i * cellSize + cellSize && e.getX() > i * cellSize) {
+					if(e.getY() < y * cellSize + cellSize && e.getY() > y * cellSize) {
+					//System.out.println("Clicked");
 					if(array[i][y].isAlive==true) {
 						array[i][y].isAlive=false;
 					}
