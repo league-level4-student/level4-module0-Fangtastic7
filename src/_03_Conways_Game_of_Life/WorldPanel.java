@@ -112,11 +112,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		//8. check if each cell should live or die
 		
 		
-		//for(int i = 0 ; i < array.length; i++) {
-		//	for(int y =0;  y <array.length; y++) {
-			//	System.out.println("Cell: " + i + " " + y + " - " + array[i][y].isAlive);
-			//}
-			//}
+		
 		
 		
 		
@@ -128,20 +124,22 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
-		System.out.println(x + "," + y);
+		//see the amount of living neighbors
 		
-		if(x ==cellSize && y==cellSize && x ==  cellsPerRow * cellSize -cellSize && y == cellsPerRow * cellSize -cellSize) {
-			System.out.println("8 neighbors");
+		//As shown below takes account of non-living and assumes that they are all alive around
+		//makes sure to check that the neighbors are alive.
+		if(x > 0 && y > 0  && x <  cellsPerRow && y < cellsPerRow ) {
+				//System.out.println("8 neighbors");
 			return 8;
 		}
-	//	else if(x < cellSize && y < cellSize || x < cellSize && y< cellsPerRow * cellSize && y> cellsPerRow * cellSize - cellSize || y> cellsPerRow * cellSize - cellSize && x > cellsPerRow * cellSize - cellSize || x> cellsPerRow * cellSize - cellSize && y< cellSize) {
-	//		return 3;
-	//	}
-		//else if(x<=cellSize && y >= cellSize && y <= cellsPerRow * cellSize - cellSize|| y<=cellSize && x >= cellSize && x <= cellsPerRow * cellSize - cellSize || x>=cellsPerRow * cellSize-cellSize && y >= cellSize && y <= cellsPerRow * cellSize -cellSize || y>= cellsPerRow * cellSize -cellSize && x>= cellSize && x <=  cellsPerRow * cellSize -cellSize ) {
-		////	return 5;
-		//}
-		System.out.println("Not in corners");
-		return -1;
+		 if(x ==0 && y ==0 || x ==0  && y == cellsPerRow -1 || y == 0  && x == cellsPerRow -1 || x == cellsPerRow -1 && y == cellsPerRow -1) {
+			System.out.println(x + "," + y);
+			return 3;
+		} //makes a 10 by 10 red block
+		else {
+		return 5;
+		}
+		
 		
 	}
 
