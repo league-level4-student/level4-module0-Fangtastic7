@@ -45,7 +45,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 	public void randomizeCells() {
 		// 4. Iterate through each cell and randomly set each
-		// cell's isAlive memeber to true of false
+		// cell's isAlive member to true of false
 		Random rand = new Random();
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
@@ -128,7 +128,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// As shown below takes account of non-living and assumes that they are all
 		// alive around
 		// makes sure to check that the neighbors are alive.
-
+	//	for(int i = 0; i < array.length ; i++) {
+	//		for(int j=0; j < array.length; j++) {
+	
 		if (x == 0 && y == 0) {
 			if (array[x + 1][y].isAlive == true) {
 				neighbors = neighbors + 1;
@@ -164,7 +166,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			} else if (array[x - 1][y].isAlive == true) {
 				neighbors = neighbors + 1;
 			}
-		} else if (x == 0 ) {
+		} else if (x == 0 && y > 0 && y < cellsPerRow -1 ) {
 			if (array[x][y - 1].isAlive == true) {
 				neighbors = neighbors + 1;
 			} else if (array[x + 1][y - 1].isAlive == true) {
@@ -176,7 +178,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 			} else if (array[x][y + 1].isAlive == true) {
 				neighbors = neighbors + 1;
 			}
-		} else if (y == 0  ) {
+		} else if (y == 0 && x > 0 && x < cellsPerRow ) {
 			if (array[x - 1][y].isAlive == true) {
 				neighbors = neighbors + 1;
 			} else if (array[x - 1][y + 1].isAlive == true) {
@@ -231,7 +233,18 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				neighbors = neighbors + 1;
 			}
 		}
+		/*
+		for(int i = -1 ; i <= array.length ; i++) {
+		for(int j=-1; j <= array.length; j++) {
+			if( array[x+i][y+j].isAlive==true) {
+				neighbors = neighbors +1;
+			}
+		}
+		}
+		*/
 		return neighbors;
+	
+		
 	}
 
 	@Override
