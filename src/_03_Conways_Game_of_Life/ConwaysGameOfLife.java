@@ -86,6 +86,7 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 				gamePanel.setAnimationDelay(x);
 			}else {
 				gamePanel.stopAnimation();
+				System.out.println("STOP");
 				startStopButton.setText("START");
 			}
 		}else if(e.getSource() == randomizeButton) {

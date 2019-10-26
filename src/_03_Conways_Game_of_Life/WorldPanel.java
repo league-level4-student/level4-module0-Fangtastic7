@@ -50,11 +50,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
 				// int x = rand.nextInt(1);
-				if (rand.nextInt(2) == 0) {
-					array[i][y].isAlive = true;
-				} else {
-					array[i][y].isAlive = false;
-				}
+				
+					array[i][y].isAlive = rand.nextBoolean();
+				
 			}
 		}
 		repaint();
@@ -62,6 +60,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 	public void clearCells() {
 		// 5. Iterate through the cells and set them all to dead.
+		System.out.println("Clear");
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
 				array[i][y].isAlive = false;
@@ -85,9 +84,11 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	@Override
 	public void paintComponent(Graphics g) {
 		// 6. Iterate through the cells and draw them all
+		System.out.println("Paint");
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
 				array[i][y].draw(g);
+				System.out.println("Draw");
 			}
 		}
 
@@ -103,7 +104,10 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
-				livingNeighbors[i][y] = getLivingNeighbors(i, y);
+				int num = getLivingNeighbors(i, y);
+				System.out.println(num);
+				livingNeighbors[i][y] = num;
+				
 
 			}
 		}
@@ -123,128 +127,106 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
 		int neighbors = 0;
+		if (x > 0) {
+			if (array[x - 1][y].isAlive) {
+				neighbors++;
+			}
+
+		} else if (y > 0) {
+			if (array[x][y - 1].isAlive) {
+				neighbors++;
+			}
+			if (x > 0) {
+				if (array[x - 1][y - 1].isAlive) {
+					neighbors++;
+				}
+				if (cellsPerRow - 1 > x) {
+					if (array[x + 1][y - 1].isAlive) {
+						neighbors++;
+					}
+				}
+			}
+
+		} else if (x < cellsPerRow - 1) {
+			if (array[x + 1][y].isAlive) {
+				neighbors++;
+			}
+		} else if (y < cellsPerRow - 1) {
+			if (array[x][y + 1].isAlive) {
+				neighbors++;
+			}
+			if (x < cellsPerRow - 1) {
+				if (array[x + 1][y + 1].isAlive) {
+					neighbors++;
+				}
+				if (x > 0) {
+					if (array[x - 1][y + 1].isAlive) {
+						neighbors++;
+					}
+				}
+			}
+		}
 		// see the amount of living neighbors
 
 		// As shown below takes account of non-living and assumes that they are all
 		// alive around
 		// makes sure to check that the neighbors are alive.
-	//	for(int i = 0; i < array.length ; i++) {
-	//		for(int j=0; j < array.length; j++) {
-	
-		if (x == 0 && y == 0) {
-			if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-				System.out.println("0,0");
-			}
-			else if (array[x + 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (x == 0 && y == cellsPerRow - 1) {
-			if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (y == 0 && x == cellsPerRow - 1) {
-			if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (x == cellsPerRow - 1 && y == cellsPerRow - 1) {
-
-			if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (x == 0 && y > 0 && y < cellsPerRow -1 ) {
-			if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (y == 0 && x > 0 && x < cellsPerRow ) {
-			if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (x == cellsPerRow - 1  ) {
-			if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (y == cellsPerRow - 1 ) {
-			if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		} else if (x > 0 && y > 0 && x < cellsPerRow - 1 && y < cellsPerRow -1 ) {
-			if (array[x][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x - 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y - 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y].isAlive == true) {
-				neighbors = neighbors + 1;
-			} else if (array[x + 1][y + 1].isAlive == true) {
-				neighbors = neighbors + 1;
-			}
-		}
+		// for(int i = 0; i < array.length ; i++) {
+		// for(int j=0; j < array.length; j++) {
 		/*
-		for(int i = -1 ; i <= array.length ; i++) {
-		for(int j=-1; j <= array.length; j++) {
-			if( array[x+i][y+j].isAlive==true) {
-				neighbors = neighbors +1;
-			}
-		}
-		}
-		*/
+		 * if (x == 0 && y == 0) { if (array[x + 1][y].isAlive) { neighbors = neighbors
+		 * + 1; System.out.println("0,0"); } else if (array[x + 1][y + 1].isAlive) {
+		 * neighbors = neighbors + 1; } else if (array[x][y + 1].isAlive) { neighbors =
+		 * neighbors + 1; } } else if (x == 0 && y == cellsPerRow - 1) {
+		 * System.out.println(x + ", " + y); if (array[x][y - 1].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x + 1][y - 1].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x + 1][y].isAlive) { neighbors = neighbors +
+		 * 1; } } else if (y == 0 && x == cellsPerRow - 1) { System.out.println(x + ", "
+		 * + y); if (array[x][y + 1].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x - 1][y + 1].isAlive) { neighbors = neighbors + 1; } else if (array[x
+		 * - 1][y].isAlive) { neighbors = neighbors + 1; } } else if (x == cellsPerRow -
+		 * 1 && y == cellsPerRow - 1) {
+		 * 
+		 * if (array[x][y - 1].isAlive) { neighbors = neighbors + 1; } else if (array[x
+		 * - 1][y - 1].isAlive) { neighbors = neighbors + 1; } else if (array[x -
+		 * 1][y].isAlive) { neighbors = neighbors + 1; } } else if (x == 0 && y > 0 && y
+		 * < cellsPerRow - 1) { if (array[x][y - 1].isAlive) { neighbors = neighbors +
+		 * 1; } else if (array[x + 1][y - 1].isAlive) { neighbors = neighbors + 1; }
+		 * else if (array[x + 1][y].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x + 1][y + 1].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x][y + 1].isAlive) { neighbors = neighbors + 1; } } else if (y == 0 &&
+		 * x > 0 && x < cellsPerRow - 1) { if (array[x - 1][y].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x - 1][y + 1].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x][y + 1].isAlive) { neighbors = neighbors +
+		 * 1; } else if (array[x + 1][y + 1].isAlive) { neighbors = neighbors + 1; }
+		 * else if (array[x + 1][y].isAlive) { neighbors = neighbors + 1; } } else if (x
+		 * == cellsPerRow - 1 && y > 0 && y < cellsPerRow - 1) { if (array[x][y -
+		 * 1].isAlive) { neighbors = neighbors + 1; } else if (array[x - 1][y -
+		 * 1].isAlive) { neighbors = neighbors + 1; } else if (array[x - 1][y].isAlive)
+		 * { neighbors = neighbors + 1; } else if (array[x - 1][y + 1].isAlive) {
+		 * neighbors = neighbors + 1; } else if (array[x][y + 1].isAlive) { neighbors =
+		 * neighbors + 1; } } else if (y == cellsPerRow - 1 && x > 0 && x < cellsPerRow
+		 * - 1) { if (array[x - 1][y].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x - 1][y - 1].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x][y - 1].isAlive) { neighbors = neighbors + 1; } else if (array[x +
+		 * 1][y - 1].isAlive) { neighbors = neighbors + 1; } else if (array[x +
+		 * 1][y].isAlive) { neighbors = neighbors + 1; } } else if (x > 0 && y > 0 && x
+		 * < cellsPerRow - 1 && y < cellsPerRow - 1) { if (array[x][y + 1].isAlive) {
+		 * neighbors = neighbors + 1; } else if (array[x - 1][y + 1].isAlive) {
+		 * neighbors = neighbors + 1; } else if (array[x - 1][y].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x - 1][y - 1].isAlive) { neighbors =
+		 * neighbors + 1; } else if (array[x][y - 1].isAlive) { neighbors = neighbors +
+		 * 1; } else if (array[x + 1][y - 1].isAlive) { neighbors = neighbors + 1; }
+		 * else if (array[x + 1][y].isAlive) { neighbors = neighbors + 1; } else if
+		 * (array[x + 1][y + 1].isAlive) { neighbors = neighbors + 1; } }
+		 */
+		/*
+		 * for(int i = -1 ; i <= array.length ; i++) { for(int j=-1; j <= array.length;
+		 * j++) { if( array[x+i][y+j].isAlive==true) { neighbors = neighbors +1; } } }
+		 */
+
 		return neighbors;
-	
-		
+
 	}
 
 	@Override
@@ -276,7 +258,8 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				if (e.getX() < i * cellSize + cellSize && e.getX() > i * cellSize) {
 					if (e.getY() < y * cellSize + cellSize && e.getY() > y * cellSize) {
 						// System.out.println("Clicked");
-						if (array[i][y].isAlive == true) {
+						if (array[i][y].isAlive) {
+							System.out.println("Kill??");
 							array[i][y].isAlive = false;
 						} else {
 							array[i][y].isAlive = true;
