@@ -28,6 +28,9 @@ public class Cell implements Drawable{
 	 * (source: Wikipedia)
 	 * */
 	public void liveOrDie(int numNeighbors) {
+		if(numNeighbors > 0) {
+			System.out.println("Neighbors :" + numNeighbors);
+		}
 		//if(isAlive ==true) {
 		//System.out.println(isAlive);
 		//	if(numNeighbors < 2 ) {

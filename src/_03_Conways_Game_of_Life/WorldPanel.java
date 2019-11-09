@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -102,13 +103,16 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
+		
 		for (int i = 0; i < array.length; i++) {
 			for (int y = 0; y < array.length; y++) {
-				int num = getLivingNeighbors(i, y);
-				System.out.println(num);
-				livingNeighbors[i][y] = num;
-				
-
+				 int num = getLivingNeighbors(i, y);
+				//System.out.println(num);
+				//if(num > 1) {
+				//	JOptionPane.showMessageDialog(null, num);
+				//}
+			livingNeighbors[i][y] = num;
+			
 			}
 		}
 		// 8. check if each cell should live or die
@@ -132,7 +136,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				neighbors++;
 			}
 
-		} else if (y > 0) {
+		} if (y > 0) {
 			if (array[x][y - 1].isAlive) {
 				neighbors++;
 			}
@@ -147,11 +151,11 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				}
 			}
 
-		} else if (x < cellsPerRow - 1) {
+		} if (x < cellsPerRow - 1) {
 			if (array[x + 1][y].isAlive) {
 				neighbors++;
 			}
-		} else if (y < cellsPerRow - 1) {
+		} if (y < cellsPerRow - 1) {
 			if (array[x][y + 1].isAlive) {
 				neighbors++;
 			}
