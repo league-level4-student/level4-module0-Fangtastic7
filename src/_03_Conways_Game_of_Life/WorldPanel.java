@@ -136,7 +136,8 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				neighbors++;
 			}
 
-		} if (y > 0) {
+		} 
+		if (y > 0) {
 			if (array[x][y - 1].isAlive) {
 				neighbors++;
 			}
@@ -151,11 +152,13 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 				}
 			}
 
-		} if (x < cellsPerRow - 1) {
+		} 
+		if (x < cellsPerRow - 1) {
 			if (array[x + 1][y].isAlive) {
 				neighbors++;
 			}
-		} if (y < cellsPerRow - 1) {
+		} 
+		if (y < cellsPerRow - 1) {
 			if (array[x][y + 1].isAlive) {
 				neighbors++;
 			}

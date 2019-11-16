@@ -17,7 +17,7 @@ public class MazeMaker{
 	private static ArrayList<Cell> unvisited = new ArrayList<Cell>();
 	
 	public static Maze generateMaze(int w, int h){
-		width = w;
+		width = w; //number of cells
 		height = h;
 		maze = new Maze(width, height);
 		
@@ -38,12 +38,15 @@ public class MazeMaker{
 		currentCell.hasBeenVisited();
 		//B. Get an ArrayList of unvisited neighbors using the current cell and the method below
 		
+		unvisited = getUnvisitedNeighbors(currentCell);
+		System.out.println(unvisited.size());
 		//C. if has unvisited neighbors,
 		if(unvisited.isEmpty()) {
 			//C1. select one at random.
-			 int w = randGen.nextInt(width);
-			 int h = randGen.nextInt(height);
-			Cell cell1 = maze.array2d[w][h]; 
+			 int wid = randGen.nextInt(width);
+			 int hei = randGen.nextInt(height);
+			Cell cell1 = new Cell(wid, hei);
+			System.out.println(cell1);
 			//C2. push it to the stack
 			uncheckedCells.push(cell1);
 			//C3. remove the wall between the two cells
@@ -75,18 +78,31 @@ public class MazeMaker{
 	//   This method will check if c1 and c2 are adjacent.
 	//   If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
+		System.out.println(c1.getX());
+		if(c1.getX() < maze.getWidth() - 1 ) {
 		if(c1.getX()+1 == c2.getX() ) {
 			c1.setEastWall(false);
+			c2.setWestWall(false);
 		}
-		else if( c1.getX()-1 == c2.getX()) {
+		}
+		if(c1.getX() > 0) {
+		if( c1.getX()-1 == c2.getX()) {
 			c1.setWestWall(false);
+			c2.setEastWall(false);
 		}
-		else if( c1.getY()+1 == c2.getY()) {
+		}
+		if(c1.getY() > 0) {
+		if( c1.getY()+1 == c2.getY()) {
+			c1.setNorthWall(false);
+			c2.setSouthWall(false);
+		}
+		}
+		if(c1.getY() < maze.getHeight() -1 ) {
+		if(c1.getY()-1 == c2.getY()){
+			c1.setSouthWall(false);
 			c1.setNorthWall(false);
 		}
-		else if(c1.getY()-1 == c2.getY()){
-			c1.setSouthWall(false);
-		}
+	}
 	}
 	
 	//8. Complete the getUnvisitedNeighbors method
@@ -94,6 +110,6 @@ public class MazeMaker{
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
 		unvisited.add(c);
-		return null;
+		return unvisited;
 	}
 }

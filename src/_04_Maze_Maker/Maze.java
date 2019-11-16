@@ -8,7 +8,7 @@ public class Maze {
 	private int height;
 
 	public Maze(int w, int h) {
-		this.width = w;
+		this.width = w; //number of cells
 		this.height = h;
 
 		//2. Initialize the cells using the width and height varibles
