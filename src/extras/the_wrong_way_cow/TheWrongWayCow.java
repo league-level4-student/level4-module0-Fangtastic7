@@ -57,43 +57,49 @@ public class TheWrongWayCow {
         for(int i =0; i < field.length-1; i++) {
         	for(int j = 0; j < field.length-1; j++) {
         		
-        		if(i  < field.length-2) {
+        		if(i  < field.length-1) {
         			
-        		if((field[i][j] == 'w') && (field[i+1][j] == 'o') && field[i+2][j] == 'c') {
-        			System.out.println(i + ", " + j + "(condition: flipped side");
+        		if((field[i][j] == 'c') && (field[i+1][j] == 'o') && field[i+2][j] == 'w') {
+        			System.out.println(j + ", " +  i +  " (condition: top to bottom)");
         			side = side +1;
-        			location1[0] = i;
-        			location1[1] = j;
+        			location1[0] = j;
+        			location1[1] = i;
+        			System.out.println(j);
+        			System.out.println(i);
         		}
+        			
         		}
-        		else if(i > 1) {
+        		 if(i > 1) {
         			if(field[i][j] == 'c' && field[i-1][j] == 'o' && field[i-2][j] == 'w') {
-        				System.out.println(i + ", " + j + "(condition: normal");
+        				System.out.println(j + ", " + i + " (condition: backwards up)");
         				normal = normal +1;
-        				location2[0] = i;
-            			location2[1] = j;
+        				location2[0] = j;
+            			location2[1] = i;
         			}
         		}
         		
-        		else if( j> 1 ) {
+        		 if( j > 1) {
         			 if(field[i][j] == 'c' && field[i][j-1] == 'o' && field[i][j-2] == 'w') {
-        				 System.out.println(i + ", " + j + "(condition: bottom to top");
+        				 System.out.println(j + ", " + i + " (condition: right to left)");
         				up = up +1;
-        				location3[0] = i;
-            			location3[1] = j;
+        				location3[0] = j;
+            			location3[1] = i;
             		}
         		}
         		
-        		else if( j < field.length-2) {
+        		  if( j < field[0].length-1) {
         			if(field[i][j] == 'c' && field[i][j+1] == 'o' && field[i][j+2] == 'w') {
-        				 System.out.println(i + ", " + j + "(condition: top to bottom");
+        				 System.out.println(j + ", " + i + " (condition: left to right)");
+        				 System.out.println(field.length);
        				down = down +1;
-       				location4[0] = i;
-        			location4[1] = j;
+       				location4[0] = j;
+        			location4[1] = i;
            		}
         		}	 
+        		
+        		}
         	}
-        }
+        
         if(side == 1) {
         	return location1;
         }
@@ -106,7 +112,9 @@ public class TheWrongWayCow {
         else if(down ==1) {
         	return location4;
         }
-    
-return null;
+        else {
+        	return null;
+        }
+
 }
 	}
