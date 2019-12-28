@@ -54,8 +54,8 @@ public class TheWrongWayCow {
     	int[] location2 = new int[2];
     	int[] location3 = new int[2];
     	int[] location4 = new int[2];
-        for(int i = 0; i < field.length-1; i++) {
-        	for(int j = 0; j < field[0].length-1; j++) {
+        for(int i = 0; i < field.length; i++) {
+        	for(int j = 0; j < field[0].length; j++) {
         		
         		if(i  < field.length-1) {
         			
