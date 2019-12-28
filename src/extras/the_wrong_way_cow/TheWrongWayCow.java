@@ -54,18 +54,17 @@ public class TheWrongWayCow {
     	int[] location2 = new int[2];
     	int[] location3 = new int[2];
     	int[] location4 = new int[2];
-        for(int i =0; i < field.length-1; i++) {
-        	for(int j = 0; j < field.length-1; j++) {
+        for(int i = 0; i < field.length-1; i++) {
+        	for(int j = 0; j < field[0].length-1; j++) {
         		
         		if(i  < field.length-1) {
         			
-        		if((field[i][j] == 'c') && (field[i+1][j] == 'o') && field[i+2][j] == 'w') {
+        		if((field[i][j] == 'c') && (field[i+1][j] == 'o') && (field[i+2][j] == 'w')) {
         			System.out.println(j + ", " +  i +  " (condition: top to bottom)");
         			side = side +1;
         			location1[0] = j;
         			location1[1] = i;
-        			System.out.println(j);
-        			System.out.println(i);
+        			
         		}
         			
         		}
@@ -78,7 +77,7 @@ public class TheWrongWayCow {
         			}
         		}
         		
-        		 if( j > 1) {
+        		 if(j > 1) {
         			 if(field[i][j] == 'c' && field[i][j-1] == 'o' && field[i][j-2] == 'w') {
         				 System.out.println(j + ", " + i + " (condition: right to left)");
         				up = up +1;
@@ -87,10 +86,10 @@ public class TheWrongWayCow {
             		}
         		}
         		
-        		  if( j < field[0].length-1) {
+        		if( j < field[0].length-1) {
         			if(field[i][j] == 'c' && field[i][j+1] == 'o' && field[i][j+2] == 'w') {
         				 System.out.println(j + ", " + i + " (condition: left to right)");
-        				 System.out.println(field.length);
+        			//	 System.out.println(field.length);
        				down = down +1;
        				location4[0] = j;
         			location4[1] = i;
